@@ -7,7 +7,8 @@
 	<div class="card">
 	<div class="card-header" th:text="${title}"></div>
 	<div class="card-body">
-		<table class="table table-bordered table-stripped bg-light">
+		<div class="card-title"><a th:href="@{/employee/form}" class="btn btn-success" th:text="'Register Employee'"></a></div>
+		<table class="table table-bordered table-striped bg-white">
 			<thead>
 			<tr class="bg-dark text-white">
 				<th>ID</th>
@@ -30,8 +31,8 @@
 					<td th:text="${employee.city}"></td>
 					<td th:text="${employee.salary}"></td>
 					<td th:text="${employee.hiredDate}"></td>
-					<td><a th:href="@{/form/${employee.id}}" class="btn btn-primary" th:text="'Edit'"></a></td>
-					<td><a th:href="@{/form/${employee.id}}" class="btn btn-danger" th:text="'Delete'"></a></td>
+					<td><a th:href="@{/employee/form/} + ${employee.id}" class="btn btn-primary" th:text="'Edit'"></a></td>
+					<td><a th:href="@{/employee/delete/} + ${employee.id}" class="btn btn-danger" th:text="'Delete'"></a></td>
 				</tr>
 			</tbody>
 		</table>

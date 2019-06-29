@@ -14,4 +14,10 @@ public interface IEmployeeService {
 	
 	public Page<Employee> findAll(Pageable pageable);
 	
+	public void save(Employee employee);
+	
+	public Employee findById(Long id);
+	
+	public void deleteById(Long id);
+	
 }

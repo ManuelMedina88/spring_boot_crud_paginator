@@ -32,4 +32,23 @@ public class EmployeeServiceImpl implements IEmployeeService {
 		
 	}
 
+	@Override
+	public void save(Employee employee) {
+		// TODO Auto-generated method stub
+		employeeDao.save(employee);
+		
+	}
+
+	@Override
+	public Employee findById(Long id) {
+		// TODO Auto-generated method stub
+		return employeeDao.findById(id).orElse(null);
+	}
+
+	@Override
+	public void deleteById(Long id) {
+		// TODO Auto-generated method stub
+		employeeDao.deleteById(id);
+	}
+
 }
