@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.thymeleaf.org">
+<head th:replace="/layout/layout :: head"></head>
+<body>
+	<header th:replace="/layout/layout :: header"></header>
+	
+	
+	<div class= "container py-4">
+	
+	<div class="card bg-light">
+	<div class="card-header bg-dark text-light" th:text="${title}"></div>
+	<div class=card-body>
+	
+		<div th:if="${!employee.photo.equals('')}">
+			<img class="img-thumbnail rounded float-left" style="max-width:25%;" th:src="@{'/uploads/' + ${employee.photo}}" th:alt="${employee.photo}" />
+		</div>
+		<div class="px-4">
+		<div th:text="${employee.id}"></div>
+		<div th:text="${employee.name}"></div>
+		<div th:text="${employee.lastName}"></div>
+		<div th:text="${employee.phoneNumber}"></div>
+		<div th:text="${employee.city}"></div>
+		<div th:text="${employee.salary}"></div>
+		<div th:text="${employee.hiredDate}"></div>
+		</div>
+	</div>
+	</div>
+	</div>
+
+	<footer th:replace="/layout/layout :: footer"></footer>
+</body>
+</html>

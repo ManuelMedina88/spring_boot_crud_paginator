@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/layout/layout :: head"></head>
+<body>
+	<header th:replace="/layout/layout :: header"></header>
+
+	<div class="container py-4">
+		<div class="card bg-light">
+			<div class="card-header bg-dark text-light" th:text="${title}"></div>
+			<div class="card-body">
+
+				<form th:action="@{/employee/form}" th:object="${employee}"
+					method="post" enctype="multipart/form-data" autocomplete="off">
+					<div class="form-group row">
+						<label class="col-sm-2 col-form-label">Name</label>
+						<div class="col-sm-6">
+							<input type="text" th:field="*{name}" class="form-control"
+								th:errorclass="'form-control alert-danger'" /> <small
+								class="form-text text-danger"
+								th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></small>
+						</div>
+					</div>
+					<div class="form-group row">
+						<label class="col-sm-2 col-form-label">Last Name</label>
+						<div class="col-sm-6">
+							<input type="text" th:field="*{lastName}" class="form-control"
+								th:errorclass="'form-control alert-danger'" /> <small
+								class="form-text text-danger"
+								th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></small>
+						</div>
+					</div>
+					<div class="form-group row">
+						<label class="col-sm-2 col-form-label">Phone number</label>
+						<div class="col-sm-6">
+							<input type="text" th:field="*{phoneNumber}" class="form-control"
+								th:errorclass="'form-control alert-danger'" /> <small
+								class="form-text text-danger"
+								th:if="${#fields.hasErrors('phoneNumber')}"
+								th:errors="*{phoneNumber}"></small>
+						</div>
+					</div>
+					<div class="form-group row">
+						<label class="col-sm-2 col-form-label">City</label>
+						<div class="col-sm-6">
+							<input type="text" th:field="*{city}" class="form-control"
+								th:errorclass="'form-control alert-danger'" /> <small
+								class="form-text text-danger"
+								th:if="${#fields.hasErrors('city')}" th:errors="*{city}"></small>
+						</div>
+					</div>
+
+					<div class="form-group row">
+						<label class="col-sm-2 col-form-label">Salary</label>
+						<div class="col-sm-6">
+							<input type="text" th:field="*{salary}" class="form-control"
+								th:errorclass="'form-control alert-danger'" /> <small
+								class="form-text text-danger"
+								th:if="${#fields.hasErrors('salary')}" th:errors="*{salary}"></small>
+						</div>
+					</div>
+
+					<div class="form-group row">
+						<label class="col-sm-2 col-form-label">Hired Date</label>
+						<div class="col-sm-6">
+							<input type="text" th:field="*{hiredDate}" class="form-control"
+								th:errorclass="'form-control alert-danger'" /> <small
+								class="form-text text-danger"
+								th:if="${#fields.hasErrors('hiredDate')}"
+								th:errors="*{hiredDate}"></small>
+						</div>
+					</div>
+
+					<div class="form-group row">
+						<label for="file" class="col-sm-2 col-form-label">Photo</label>
+						<div class="col-sm-6">
+							<input type="file" name="file" class="form control" />
+						</div>
+					</div>
+
+					<input type="submit" class="btn btn-primary" value="Crear" /> <input
+						type="reset" value="Borrar" class="btn btn-danger" />
+				</form>
+			</div>
+		</div>
+	</div>
+	<footer th:replace="/layout/layout :: footer"></footer>
+</body>
+</html>

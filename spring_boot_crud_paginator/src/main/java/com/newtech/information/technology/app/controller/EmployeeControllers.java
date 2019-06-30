@@ -1,5 +1,11 @@
 package com.newtech.information.technology.app.controller;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.UUID;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +23,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.newtech.information.technology.app.model.entities.Employee;
 import com.newtech.information.technology.app.model.service.IEmployeeService;
@@ -47,6 +55,22 @@ public class EmployeeControllers {
 		return model;
 	}
 	
+	@GetMapping(value="/look/{id}")
+	public String look(@PathVariable(value="id") Long id, Model model){
+
+		Employee employee = employeeService.findById(id);
+		
+		if(employee == null){
+			return "redirect:/employee/list";
+		}
+		
+		model.addAttribute("employee", employee);
+		model.addAttribute("title", "Employeee Details:" + employee.getName());
+		
+		return "look";
+	}
+	
+	
 	@GetMapping("/form")
 	public String registerEmployee(Model model) {
 		
@@ -66,14 +90,31 @@ public class EmployeeControllers {
 	}
 	
 	@PostMapping("/form")
-	public String saveEmployee(@Valid @ModelAttribute("employee") Employee employee,
-			BindingResult result, SessionStatus status, Model model) {
-		
-		
-		if(result.hasErrors()) {
-			String title = (employee.getId() == null)? "Registering Employee": "Modifying Employee";
-			model.addAttribute("title", title);
+	public String saveEmployee(@Valid Employee employee, BindingResult result, Model model,
+		@RequestParam("file") MultipartFile photo, RedirectAttributes flash, SessionStatus status){
+
+		if(result.hasErrors()){
+			
+			model.addAttribute("title", "Form of Customer");
 			return "form";
+		}
+		
+		if(!photo.isEmpty()){
+		
+			String uniqueFilename = UUID.randomUUID().toString() + "_" + photo.getOriginalFilename();
+			Path rootPath = Paths.get("uploads").resolve(uniqueFilename);
+			
+			Path rootAbsolutePath = rootPath.toAbsolutePath();
+			
+			try{
+			
+				Files.copy(photo.getInputStream(), rootAbsolutePath);
+				
+				employee.setPhoto(uniqueFilename);
+			}catch(IOException ex){
+				
+				ex.printStackTrace();
+			}
 		}
 		
 		employeeService.save(employee);

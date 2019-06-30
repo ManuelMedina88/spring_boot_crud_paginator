@@ -24,7 +24,7 @@
 			</thead>
 			<tbody>
 				<tr th:each="employee : ${employees}">
-					<td th:text="${employee.id}"></td>
+					<td><a th:href="@{/employee/look/} + ${employee.id}" class="btn btn-primary" th:text="${employee.id}"></a></td>
 					<td th:text="${employee.name}"></td>
 					<td th:text="${employee.lastName}"></td>
 					<td th:text="${employee.phoneNumber}"></td>
