@@ -17,7 +17,7 @@ public class MvcConfig implements WebMvcConfigurer {
 		String resourcePath = Paths.get("uploads").toAbsolutePath().toUri().toString();
 		
 		
-		registry.addResourceHandler("/uploads/**")
+		registry.addResourceHandler("/employee/uploads/**")
 		.addResourceLocations(resourcePath);
 	}
 }
