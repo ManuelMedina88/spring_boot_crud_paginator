@@ -1,5 +1,6 @@
 package com.newtech.information.technology.app.controller;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.file.Files;
@@ -111,6 +112,19 @@ public class EmployeeControllers {
 		
 		if(!photo.isEmpty()){
 		
+			if(employee.getId() != null
+					&& employee.getId() > 0
+					&& employee.getPhoto() != null 
+					&& employee.getPhoto().length()> 0) {
+				
+				Path photoPath = Paths.get("uploads").resolve(employee.getPhoto()).toAbsolutePath();
+				File photo1 = photoPath.toFile();
+				
+				if(photo1.exists()&& photo1.canRead())
+					photo1.delete();
+			}
+			
+			
 			String uniqueFilename = "employee_" + employee.getId()+"_" + UUID.randomUUID().toString() + "_" + photo.getOriginalFilename();
 			Path rootPath = Paths.get("uploads").resolve(uniqueFilename);
 			
@@ -132,14 +146,18 @@ public class EmployeeControllers {
 		return "redirect:/employee/list";
 	}
 	
-	
-	
-	
-	
 	@GetMapping("/delete/{id}")
 	public String deleteEmployee(@PathVariable("id")Long id, Model model) {
 		
+		Employee employee = employeeService.findById(id);
+		
 		employeeService.deleteById(id);
+		
+		Path photoPath = Paths.get("uploads").resolve(employee.getPhoto()).toAbsolutePath();
+		File photo = photoPath.toFile();
+		
+		if(photo.exists()&& photo.canRead())
+			photo.delete(); 
 		
 		return "redirect:/employee/list";
 		
